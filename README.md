@@ -1,37 +1,75 @@
-## Welcome to GitHub Pages
+<p align="center">
+  <a href="https://vuejs.org" target="blank">
+    <img src="https://raw.githubusercontent.com/surmon-china/surmon.me/master/presses/vue-logo.png" height="90" alt="vue logo" />
+  </a>
+  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+  <a href="https://github.com/surmon-china/surmon.me" target="blank">
+    <img src="https://raw.githubusercontent.com/surmon-china/surmon.me/master/presses/logo.png" height="90" alt="surmon.me logo" />
+  </a>
+</p>
 
-You can use the [editor on GitHub](https://github.com/DeerShu191/DeerShu191.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+# Surmon.me
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+[![vue](https://img.shields.io/badge/MADE%20WITH-VUE-42a97a?style=for-the-badge&labelColor=35495d)](https://vuejs.org)
+[![nodepress](https://img.shields.io/badge/NODE-PRESS-83BA2F?style=for-the-badge&labelColor=90C53F)](https://github.com/surmon-china/nodepress)
+[![GitHub stars](https://img.shields.io/github/stars/surmon-china/surmon.me.svg?style=for-the-badge)](https://github.com/surmon-china/surmon.me/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues-raw/surmon-china/surmon.me.svg?style=for-the-badge)](https://github.com/surmon-china/surmon.me/issues)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/surmon-china/surmon.me/Deploy?style=for-the-badge&label=Deploy)](https://github.com/surmon-china/surmon.me/actions?query=workflow:%22Deploy%22)
+[![GitHub license](https://img.shields.io/github/license/surmon-china/surmon.me.svg?style=for-the-badge)](https://github.com/surmon-china/surmon.me/blob/master/LICENSE)
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+**My personal website and blog, powered by [Vue (3)](https://vuejs.org).** 
 
-```markdown
-Syntax highlighted code block
+**使用 [Vue (3)](https://vuejs.org) 构建的个人网站。**
 
-# Header 1
-## Header 2
-### Header 3
+**Online site:** https://surmon.me
 
-- Bulleted
-- List
+**其他相关项目：**
+- **RESTful API service:** [nodepress](https://github.com/surmon-china/nodepress) powered by [nestjs](https://github.com/nestjs/nest)
+- **web client for admin:** [angular-admin](https://github.com/surmon-china/angular-admin) powered by [Angular](https://github.com/angular/angular) & [Bootstrap](https://github.com/twbs/bootstrap)
+- **native app client:** [surmon.me.native](https://github.com/surmon-china/surmon.me.native) powered by [react-native](https://github.com/facebook/react-native)
 
-1. Numbered
-2. List
+**更新记录：[CHANGELOG.md](https://github.com/surmon-china/surmon.me/blob/master/CHANGELOG.md)**
 
-**Bold** and _Italic_ and `Code` text
+## Screenshot
 
-[Link](url) and ![Image](src)
+![](https://raw.githubusercontent.com/surmon-china/surmon.me/master/presses/pc.png)
+
+![](https://raw.githubusercontent.com/surmon-china/surmon.me/master/presses/mobile.png)
+
+## Development Setup
+
+```bash
+# install dependencies
+$ yarn
+
+# serve with hot reload at localhost:3000
+$ yarn dev
+
+# or
+$ yarn dev:spa
+$ yarn dev:ssr
+
+# build for production and launch server
+$ yarn build
+
+# or
+$ yarn build:spa
+$ yarn build:ssr
+
+# run SSR
+$ yarn start
+
+# lint test
+$ yarn lint
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Actions setup
 
-### Jekyll Themes
+**Rule:**
+- `any PR open` → `CI:Build test`
+- `master PR closed & merged` → `CI:Deploy to server`
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/DeerShu191/DeerShu191.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+**Example:**
+- `local:develop` → `remote:develop` → `CI:Build test`
+- `remote:develop/other` → `remote:master → merged` → `CI:Deploy to server`
