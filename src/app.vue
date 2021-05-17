@@ -1,78 +1,63 @@
 <template>
-  <div v-cloak id="app-root" :class="theme">
-    <client-only>
-      <progress-bar />
-      <emoji-rain />
-      <popup-root />
-    </client-only>
-    <!-- unuse suspense -> async route component -> can't extract style to css file -->
-    <captured>
-      <component :is="LayoutComponent">
-        <router-view v-slot="{ Component, route }">
-          <div class="router-view">
-            <transition
-              name="page"
-              mode="out-in"
-              @before-enter="handlePageTransitionDone"
-            >
-              <suspense>
-                <component :is="Component" :key="route.name" />
-              </suspense>
-            </transition>
-          </div>
-        </router-view>
-      </component>
-    </captured>
+  <div id="app" class="conetent" :class="headCoverSilde?'slide':''">
+    <nav-header v-show="isShowNav" :nav-list="navList" v-on:slidechange="headSilde"></nav-header>
+    <router-view/>
+
   </div>
 </template>
 
-<script lang="ts">
-  import { defineComponent, computed } from 'vue'
-  import { useEnhancer } from '/@/enhancer'
-  import { getLayoutByRouteMeta } from '/@/services/layout'
-  import Captured from '/@/components/root/captured.vue'
-  import EmojiRain from '/@/components/widget/emoji-rain.vue'
-  import PcMain from '/@/components/layout/pc/main.vue'
-  import MobileMain from '/@/components/layout/mobile/main.vue'
+<script>
+import navHeader from './views/components/blog-header.vue';
+import config from '@/config/blog-config.json'
 
-  export default defineComponent({
-    name: 'App',
-    components: {
-      Captured,
-      EmojiRain,
-    },
-    setup() {
-      const { theme, route, globalState, isMobile } = useEnhancer()
-      const LayoutComponent = computed(() => {
-        return isMobile.value
-          ? MobileMain
-          : PcMain
-      })
-
-      const handlePageTransitionDone = () => {
-        globalState.setLayoutColumn(
-          getLayoutByRouteMeta(route.meta)
-        )
-      }
-
-      return {
-        LayoutComponent,
-        theme: theme.theme,
-        handlePageTransitionDone
-      }
+export default {
+  name: 'App',
+  components: {
+    navHeader
+  },
+  data () {
+    return {
+      headCoverSilde: false,
+      isShowNav: true,
+      navList: [],
+      noNavList: [{
+        name: 'index',
+        router: '/'
+      }]
     }
-  })
+  },
+  methods: {
+    headSilde (data) {
+      this.headCoverSilde = data;
+    },
+    routerChange (oldRoute, newRoute) {
+      console.log(newRoute);
+      const routerItem = this.noNavList.find(value => {
+        return newRoute.name === value.name;
+      });
+      if (!routerItem) {
+        this.isShowNav = true;
+        return;
+      }
+      this.isShowNav = false;
+      console.log(this.isShowNav);
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.routerChange(from, to);
+    }
+  },
+  created: function () {
+    this.navList = config.nav.navList;
+    this.navList.forEach(item => {
+      // 这里因为webpack的图片打包的原因，需要重新require一下图片的地址进行加载
+      item.icon = require('./' + item.icon)
+    })
+    this.routerChange(null, this.$route);
+  }
+}
 </script>
 
-<style lang="scss" scoped>
-  @import 'src/assets/styles/init.scss';
-
-  #app-root {
-    color: $text;
-
-    &[v-cloak] {
-      color: transparent;
-      -webkit-text-fill-color: transparent;
-    }
-  }
+<style>
 </style>
